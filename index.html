@@ -9,9 +9,43 @@
 <body>
   <div class="container">
     <h1>PayPal Dispute AI</h1>
-    <p>M0 - Hello World. Aplikasi ini akan membantu buat surat appeal dispute PayPal.</p>
-    <button onclick="testConnection()">Cek Koneksi</button>
-    <div id="result"></div>
+    <p>Bantuan buat surat appeal dispute PayPal menggunakan AI.</p>
+    
+    <form id="disputeForm">
+      <div class="form-group">
+        <label>Jenis Dispute</label>
+        <select id="disputeType" required>
+          <option value="">Pilih jenis...</option>
+          <option value="SNAD">Significantly Not As Described (barang tidak sesuai)</option>
+          <option value="INR">Item Not Received (barang tidak sampai)</option>
+          <option value="UAT">Unauthorized Transaction (transaksi tidak sah)</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Detail Transaksi (ID, tanggal, jumlah)</label>
+        <textarea id="transactionDetails" rows="3" required placeholder="Contoh: ID 12345, 15 Okt 2026, $75.00"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Bukti yang kamu miliki</label>
+        <textarea id="evidence" rows="3" required placeholder="Contoh: chat dengan penjual, foto barang, tracking number"></textarea>
+      </div>
+      
+      <button type="submit">Generate Surat Appeal</button>
+    </form>
+    
+    <div id="result" style="display:none;">
+      <h3>Surat Appeal (Draft)</h3>
+      <textarea id="appealText" rows="8" readonly></textarea>
+      <div class="actions">
+        <button onclick="copyAppeal()">Salin Ke Clipboard</button>
+        <button onclick="downloadAppeal()">Unduh .txt</button>
+      </div>
+      <div class="note">Catatan: Surat ini draft. Periksa lagi sebelum kirim ke PayPal Resolution Center.</div>
+    </div>
+    
+    <div id="error" style="display:none; color: #d32f2f;"></div>
   </div>
   <script src="app.js"></script>
 </body>
