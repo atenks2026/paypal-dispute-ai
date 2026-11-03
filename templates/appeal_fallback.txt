@@ -1,0 +1,25 @@
+Subject: Formal Appeal — PayPal Dispute {dispute_id}
+
+To: PayPal Merchant Customer Service
+From: Merchant Account Holder
+Case type: {case_type}
+Reason: {reason}
+Status: {status}
+Amount: {amount} {currency}
+Opened: {create_time}
+
+Dear PayPal Merchant Customer Service,
+
+I am writing to formally appeal the above dispute ({dispute_id}) and request a review in the seller's favor.
+
+Case summary: {reason}. The transaction details and case history are as recorded in PayPal's system (dispute ID {dispute_id}, status {status}).
+
+Evidence attached:
+{evidence}
+
+Based on the evidence above, I request that PayPal reverse the dispute and release the funds to the seller's account. I am available to provide any additional documentation required.
+
+Thank you for your review.
+
+Sincerely,
+Merchant Account Holder
