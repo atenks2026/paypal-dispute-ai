@@ -3,50 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PayPal Dispute AI</title>
+  <title>PayPal Dispute AI — Dispute Compass</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>PayPal Dispute AI</h1>
-    <p>Bantuan buat surat appeal dispute PayPal menggunakan AI.</p>
-    
+    <div class="header">
+      <h1>PayPal Dispute AI</h1>
+      <div class="status-badge" id="backendStatus">Menunggu backend...</div>
+    </div>
+    <p class="subtitle">Generate surat appeal untuk dispute PayPal menggunakan AI. Hasilkan draft, salin, lalu kirim ke PayPal Resolution Center secara manual.</p>
+
     <form id="disputeForm">
       <div class="form-group">
         <label>Jenis Dispute</label>
         <select id="disputeType" required>
           <option value="">Pilih jenis...</option>
-          <option value="SNAD">Significantly Not As Described (barang tidak sesuai)</option>
+          <option value="SNAD">Significantly Not As Described (barang tidak sesuai deskripsi)</option>
           <option value="INR">Item Not Received (barang tidak sampai)</option>
           <option value="UAT">Unauthorized Transaction (transaksi tidak sah)</option>
         </select>
       </div>
-      
+
       <div class="form-group">
         <label>Detail Transaksi (ID, tanggal, jumlah)</label>
         <textarea id="transactionDetails" rows="3" required placeholder="Contoh: ID 12345, 15 Okt 2026, $75.00"></textarea>
       </div>
-      
+
       <div class="form-group">
         <label>Bukti yang kamu miliki</label>
-        <textarea id="evidence" rows="3" required placeholder="Contoh: chat dengan penjual, foto barang, tracking number"></textarea>
+        <textarea id="evidence" rows="3" required placeholder="Contoh: chat dengan penjual, foto barang, tracking number, screenshot pembayaran"></textarea>
       </div>
-      
+
       <button type="submit">Generate Surat Appeal</button>
     </form>
-    
+
     <div id="result" style="display:none;">
       <h3>Surat Appeal (Draft)</h3>
       <textarea id="appealText" rows="8" readonly></textarea>
+      <div id="sourceNote" style="display:none; font-size: 12px; color: #666; margin-top: 8px; font-style: italic;"></div>
       <div class="actions">
-        <button onclick="copyAppeal()">Salin Ke Clipboard</button>
-        <button onclick="downloadAppeal()">Unduh .txt</button>
+        <button type="button" onclick="copyAppeal()">Salin Ke Clipboard</button>
+        <button type="button" onclick="downloadAppeal()">Unduh .txt</button>
       </div>
-      <div class="note">Catatan: Surat ini draft. Periksa lagi sebelum kirim ke PayPal Resolution Center.</div>
+      <div class="note">Catatan: Surat ini draft. Periksa lagi sebelum kirim ke PayPal Resolution Center. (Opsi B: kirim manual, tidak ada integrasi API langsung ke PayPal.)</div>
     </div>
-    
+
     <div id="error" style="display:none; color: #d32f2f;"></div>
+
+    <div class="footer">
+      <p><strong>Dispute Compass</strong> — PayPal AI Hackathon 2026 (Devpost) | AHVO Virtual Office</p>
+    </div>
   </div>
+  <script>window.APP_BACKEND_URL = 'http://localhost:5000';</script>
   <script src="app.js"></script>
 </body>
 </html>
