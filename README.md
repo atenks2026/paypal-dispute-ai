@@ -50,3 +50,26 @@ python -m pytest tests/ -q   # mocked: no network, no credentials needed
 ## Security
 - `.env` and `05-rahasia/` are never committed (`.gitignore`).
 - No API keys in frontend code; all PayPal/NIM calls are server-side.
+
+## AI Tools Disclosure (wajib Devpost)
+Produk ini menggunakan AI untuk membantu menyusun surat appeal:
+- **Alat AI:** LLM NVIDIA NIM (OpenAI-compatible), model `nemotron-3.5-super-vl-120b-a12b`, untuk generate draft surat appeal dalam bahasa Inggris.
+- **Fallback non-AI:** jika NIM tidak tersedia, sistem menggunakan template statis (`templates/appeal_fallback.txt`) tanpa AI.
+- **Transparansi sumber:** setiap surat di UI ditandai sumbernya — "AI (NVIDIA NIM)", "Template statis (fallback, NIM tidak tersedia)", atau "Template statis (backend tidak tersedia)".
+- **Hasil AI adalah draft:** periksa dan setujui sendiri sebelum kirim ke PayPal Resolution Center.
+- **Keamanan kredensial:** kunci API PayPal dan NIM tidak pernah mencapai browser; semua panggilan PayPal/NIM berjalan server-side via proxy Flask.
+
+## Akses khusus untuk juri (Sandbox PayPal) — wajib di README
+Submission ini membutuhkan akses khusus ke PayPal Sandbox (developer.paypal.com):
+1. Masuk ke developer.paypal.com dengan akun PayPal Sandbox.
+2. Buat aplikasi Sandbox: Dashboard → Sandbox → Apps → Create App. Catat **Client ID** dan **Secret**.
+3. Salin `.env.example` ke `.env` (di luar repo, **jangan commit** `.env`), lalu isi `PAYPAL_CLIENT_ID` dan `PAYPAL_CLIENT_SECRET`.
+4. Jalankan tes tanpa credential: `python -m pytest tests/ -q` (semua PayPal + LLM di-mock).
+5. Jalankan backend: `python app.py`, lalu buka `http://localhost:5000/health`.
+6. Buka frontend (`index.html`), isi detail dispute, generate draft, lalu **salin atau unduh** draft dan kirim secara manual ke PayPal Resolution Center (**Opsi B**; tidak ada integrasi API langsung ke production PayPal).
+
+## Rekomendasi: approval step dan batas (sandkai PayPal)
+- **Approval step (terpenuhi, manusia):** Opsi B manual memaksa pengguna meninjau dan menyetujui draft baru mengirimkannya ke PayPal Resolution Center.
+- **Batas/limit (rekomendasi produksi):** disarankan batas jumlah appeal per hari dan nominal transaksi maksimal per appeal untuk iterasi berikutnya; belum diimplementasi pada versi hackathon.
+- **Audit trail:** sumber surat (AI / fallback / static) tercatat di `letter_source` respons API dan `sourceNote` di frontend.
+
